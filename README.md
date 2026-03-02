@@ -1,6 +1,6 @@
 # Citedy — AI SEO Content Autopilot for Cursor
 
-Citedy connects Cursor to a full AI SEO platform via MCP, giving your AI assistant the ability to scout trending topics on X and Reddit, analyze competitors, generate SEO-optimized articles in 55 languages (with AI illustrations and voice-over), create social media adaptations for 9 platforms, publish to connected accounts, produce AI avatar video shorts with subtitles, ingest any URL or YouTube video into structured content, generate lead magnets, and run a fully automated content autopilot on a recurring schedule — all from inside your editor.
+Citedy connects Cursor to a full AI SEO platform via MCP, giving your AI assistant the ability to scout trending topics on X and Reddit, analyze competitors, generate SEO-optimized articles in 55 languages (with AI illustrations and voice-over), create social media adaptations for 9 platforms, publish to connected accounts, produce AI UGC viral video shorts with subtitles, ingest any URL or YouTube video into structured content, generate lead magnets, and run a fully automated content autopilot on a recurring schedule — all from inside your editor.
 
 ---
 
