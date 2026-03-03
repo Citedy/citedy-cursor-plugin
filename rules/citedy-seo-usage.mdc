@@ -42,6 +42,7 @@ Use Citedy MCP tools whenever the user wants to:
 |------|-------------|
 | `agent.me` | Check authenticated user info, credits balance, connected accounts |
 | `agent.status` | Get platform health, quota usage, active sessions |
+| `agent.health` | Check the agent service health and connectivity |
 
 Always call `agent.me` first if the user asks about their account or available credits.
 
@@ -74,6 +75,7 @@ Use before generating articles when the user wants to outrank specific domains o
 | Tool | When to use |
 |------|-------------|
 | `gaps.generate` | Identify content topics that competitors rank for but the user's site does not |
+| `gaps.list` | List previously generated content gaps |
 
 Run after `competitors.scout` to get a prioritized list of high-opportunity topics.
 
@@ -84,6 +86,7 @@ Run after `competitors.scout` to get a prioritized list of high-opportunity topi
 | Tool | When to use |
 |------|-------------|
 | `article.generate` | Generate a full SEO article from a keyword, topic, or brief |
+| `article.list` | List existing articles for the tenant |
 
 Key options:
 - `keyword` — target search term
@@ -125,12 +128,13 @@ Requires a connected account (user must authorize via Citedy dashboard). Check c
 |------|-------------|
 | `shorts.script` | Generate a video script from an article or topic |
 | `shorts.generate` | Produce an AI avatar video from a script |
+| `shorts.get` | Poll async video generation status |
 | `shorts.avatar` | Select or customize the AI avatar |
 | `shorts.merge` | Merge video segments and add subtitles |
 
 Typical flow: `shorts.script` → `shorts.generate` → `shorts.merge`.
 
-`shorts.generate` is async — poll until the video URL is returned.
+`shorts.generate` is async — poll `shorts.get(id)` until `status === "completed"`.
 
 ---
 
@@ -140,8 +144,21 @@ Typical flow: `shorts.script` → `shorts.generate` → `shorts.merge`.
 |------|-------------|
 | `ingest.create` | Ingest a single URL (web page, YouTube video, PDF) into structured content |
 | `ingest.batch` | Ingest multiple URLs in one request |
+| `ingest.get` | Poll ingestion job status |
+| `ingest.content.get` | Retrieve structured content after ingestion |
 
 After ingestion, the content can be passed directly to `article.generate` as source material.
+
+---
+
+### Brand Scanning
+
+| Tool | When to use |
+|------|-------------|
+| `brand.scan` | Scan LLM responses for brand mentions and visibility |
+| `brand.scan.get` | Poll brand scan results (async companion) |
+
+`brand.scan` is async — poll `brand.scan.get(id)` until complete.
 
 ---
 
@@ -150,6 +167,9 @@ After ingestion, the content can be passed directly to `article.generate` as sou
 | Tool | When to use |
 |------|-------------|
 | `leadmagnet.generate` | Create a downloadable lead magnet (checklist, swipe file, or framework) from a topic or article |
+| `leadmagnet.get` | Poll lead magnet generation status |
+| `leadmagnet.publish` | Publish a generated lead magnet |
+| `leadmagnet.archive` | Archive a lead magnet |
 
 Returns a structured document ready for publishing or gating behind an email opt-in form.
 
@@ -165,6 +185,33 @@ Returns a structured document ready for publishing or gating behind an email opt
 | `products.search` | Search products by query |
 
 The knowledge base is used to ground article generation in accurate product descriptions and brand voice.
+
+---
+
+### SEO Analysis
+
+| Tool | When to use |
+|------|-------------|
+| `seo.meta_tags.check` | Analyze meta tags for SEO best practices |
+| `seo.headings.check` | Check heading structure (H1-H6) |
+| `seo.links.analyze` | Analyze external and internal links |
+| `seo.internal_links.plan` | Plan internal linking strategy |
+| `seo.og.preview` | Preview Open Graph social cards |
+| `seo.schema.validate` | Validate Schema.org structured data |
+| `seo.robots.check` | Check robots.txt rules |
+| `seo.sitemap.check` | Validate sitemap structure |
+| `seo.og_image.generate` | Generate Open Graph images |
+
+---
+
+### Settings & Personas
+
+| Tool | When to use |
+|------|-------------|
+| `settings.get` | Get current agent configuration and preferences |
+| `personas.list` | List available writing personas/voices for article generation |
+
+Use `personas.list` to discover available writing styles before calling `article.generate` with a `persona` parameter.
 
 ---
 
@@ -205,8 +252,8 @@ Events include: `article.ready`, `short.ready`, `publish.success`, `session.comp
 Many Citedy tools are async. The standard pattern is:
 
 ```
-1. Call async tool (e.g. scout.x, shorts.generate, ingest.create, leadmagnet.generate)
-2. Poll companion tool (scout.x.result, shorts.get, ingest.get, leadmagnet.get) every few seconds
+1. Call async tool (e.g. scout.x, shorts.generate, ingest.create, ingest.batch, leadmagnet.generate, brand.scan)
+2. Poll companion tool (scout.x.result, shorts.get, ingest.get, ingest.get, leadmagnet.get, brand.scan.get) every few seconds
 3. When status === "completed", retrieve the result
 ```
 
