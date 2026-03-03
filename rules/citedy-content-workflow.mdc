@@ -57,14 +57,9 @@ article.generate({
 })
 ```
 
-**This call is async.** It returns a `jobId` immediately.
+**This call is synchronous** — it returns the full article directly (with a long timeout up to 5 minutes). No polling needed.
 
-Poll until ready:
-```
-article.status(jobId)  // poll every 5–10 seconds
-```
-
-When `status === "ready"`, the article includes the full HTML/Markdown body, meta title, meta description, slug, and optionally images and audio.
+The response includes the full HTML/Markdown body, meta title, meta description, slug, and optionally images and audio.
 
 ---
 
@@ -123,11 +118,11 @@ Create a short-form video from the article for YouTube Shorts, TikTok, or Instag
 
 ```
 shorts.script(articleId, { duration: 60 })   // generate video script
-shorts.generate({ script, avatarId })         // produce video (async, poll shorts.status)
+shorts.generate({ script, avatarId })         // produce video (async, poll shorts.get)
 shorts.merge({ videoId, subtitles: true })    // add subtitles and finalize
 ```
 
-`shorts.generate` is async — poll `shorts.status(jobId)` until `status === "ready"`.
+`shorts.generate` is async — poll `shorts.get(id)` until `status === "completed"`.
 
 ---
 
@@ -156,7 +151,7 @@ The user receives webhook events or email notifications when content is ready.
 
 - **Lead magnets from articles**: After generating an article, run `leadmagnet.generate(articleId)` to create a downloadable checklist or framework based on the same content — doubles the value of each piece.
 
-- **Async polling**: All generation tools (`article.generate`, `shorts.generate`) are non-blocking. Always poll the corresponding status tool rather than waiting synchronously. Inform the user the job is running and provide updates.
+- **Async polling**: `shorts.generate`, `scout.x`, `scout.reddit`, `ingest.create`, `leadmagnet.generate`, and `brand.scan` are async. Poll with their companion tools (`shorts.get`, `scout.x.result`, `scout.reddit.result`, `ingest.get`, `leadmagnet.get`, `brand.scan.get`). Note: `article.generate` is synchronous.
 
 - **Credits**: Each operation consumes credits. Check the balance with `agent.me()` before starting large batch operations. Top up at https://www.citedy.com/dashboard/billing.
 
