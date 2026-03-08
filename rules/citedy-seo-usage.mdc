@@ -81,22 +81,28 @@ Run after `competitors.scout` to get a prioritized list of high-opportunity topi
 
 ---
 
-### Article Generation
+### Article Generation & Management
 
 | Tool | When to use |
 |------|-------------|
 | `article.generate` | Generate a full SEO article from a keyword, topic, or brief |
 | `article.list` | List existing articles for the tenant |
+| `article.publish` | Publish a draft article (status: generated → published) |
+| `article.unpublish` | Unpublish a published article (→ draft) |
+| `article.delete` | Permanently delete an article |
 
-Key options:
+Key options for `article.generate`:
 - `keyword` — target search term
 - `language` — one of 55 supported languages
 - `persona` — writing voice/style
 - `illustrations` — include AI-generated images
 - `voiceover` — include TTS audio
 - `internalLinks` — auto-link to existing content
+- `auto_publish` — when `false`, article stays as draft for review before publishing
 
 **Important**: `article.generate` is synchronous — it returns the full article directly (timeout up to 5 minutes). No polling needed.
+
+**Draft mode**: Set `auto_publish: false` to generate articles as drafts. Review them, then use `article.publish` to publish. Useful for regulated industries (healthcare, finance) requiring content review before publishing.
 
 ---
 
@@ -243,7 +249,7 @@ A session runs the full pipeline: scout → gaps → generate → adapt → publ
 | `webhooks.deliveries` | View webhook delivery history |
 | `webhooks.delete` | Remove a webhook |
 
-Events include: `article.ready`, `short.ready`, `publish.success`, `session.complete`.
+Events include: `article.generated`, `article.published`, `article.unpublished`, `article.deleted`, `article.failed`, `ingestion.completed`, `social_adaptation.generated`, `lead_magnet.ready`, `scout.results_ready`, `session.articles_generated`, `billing.credits_low`, `billing.credits_empty`.
 
 ---
 
