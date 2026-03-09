@@ -63,6 +63,14 @@ article.generate({
 
 The response includes the full HTML/Markdown body, meta title, meta description, slug, and optionally images and audio.
 
+**Draft mode**: Set `auto_publish: false` to create as draft. Then manage the lifecycle:
+```
+article.publish(id)     // publish when ready
+article.unpublish(id)   // revert to draft
+article.delete(id)      // permanently remove
+article.get(id)         // check current status
+```
+
 ---
 
 ## Step 4 — Enhance: Illustrations and Voice-Over

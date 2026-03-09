@@ -55,8 +55,8 @@ The response includes your API key and initial credit balance.
 
 ## Documentation
 
-- Full platform docs: [citedy.com](https://www.citedy.com)
-- MCP tool reference: [citedy.com/tools/mcp](https://www.citedy.com/tools/mcp)
+- Full platform docs: [citedy.com/docs](https://www.citedy.com/docs)
+- MCP tool reference: [citedy.com/docs/mcp/tools](https://www.citedy.com/docs/mcp/tools)
 
 ## Repository
 

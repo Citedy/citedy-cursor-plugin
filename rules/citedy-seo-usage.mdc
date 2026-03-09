@@ -86,6 +86,7 @@ Run after `competitors.scout` to get a prioritized list of high-opportunity topi
 | Tool | When to use |
 |------|-------------|
 | `article.generate` | Generate a full SEO article from a keyword, topic, or brief |
+| `article.get` | Get a single article by id (poll draft status, check result) |
 | `article.list` | List existing articles for the tenant |
 | `article.publish` | Publish a draft article (status: generated → published) |
 | `article.unpublish` | Unpublish a published article (→ draft) |
@@ -227,6 +228,7 @@ Use `personas.list` to discover available writing styles before calling `article
 |------|-------------|
 | `schedule.gaps` | View content gaps mapped to the publishing calendar |
 | `schedule.list` | List scheduled content items |
+| `schedule.suggest` | Get optimal time slot recommendations for publishing |
 
 ---
 
